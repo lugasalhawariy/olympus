@@ -3,20 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
+    public function nextcustomer()
+    {
+        return view('pages.customer.nextcustomer');
+    }
+
+    public function addcustomer(Request $request)
+    {
+        Customer::create([
+            'user_id' => $request->user_id,
+            'referral_id' => $request->referral_id,
+            'address' => $request->address,
+            'kelurahan' => $request->kelurahan,
+            'kecamatan' => $request->kecamatan,
+            'kota' => $request->kota,
+            'provinsi' => $request->provinsi
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+        $user->update([
+            'account_status' => 'active'
+        ]);
+        return redirect()->route('customer.index');
+    }
+
      # KEBUTUHAN DATA DENGAN JQUERY
     public function getAllData()
     {
-        // $data = DB::tables('customer')->get();
         $data = Customer::with('user')->get();
         return response()->json($data);
     }
-
 
     # KEBUTUHAN ROUTE DEFAULT
     public function index()

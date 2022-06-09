@@ -25,8 +25,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'pin' => random_int(1000, 9999),
             'phone' => '087719110891',
-            'account_type' => 2,
-            'account_role' => 'customer',
+            'account_type' => 'customer',
             'last_login' => now(),
             
             'remember_token' => Str::random(10),

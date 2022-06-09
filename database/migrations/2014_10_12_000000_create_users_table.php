@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,14 +21,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('pin');
-            $table->string('phone');
-            $table->integer('account_type')->default(2);
-            $table->string('account_role')->default('customer');
+            $table->string('pin'); #max: 6, min: 6
+            $table->string('phone'); #max: 13
+            $table->enum('account_type', ['superadmin', 'customer', 'agent'])->default('customer');
             $table->string('photo')->nullable();
-            $table->timestamp('last_login');
-            $table->string('device_token')->nullable();
-            $table->string('account_status')->default('active');
+            $table->timestamp('last_login')->default(Carbon::now());
+            $table->string('device_token')->default(request()->ip())->nullable();
+            $table->enum('account_status', ['active', 'inactive'])->default('inactive');
             $table->timestamp('phone_verified_at')->nullable();
 
             $table->rememberToken();

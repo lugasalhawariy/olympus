@@ -22,11 +22,11 @@ return new class extends Migration
             $table->string('kecamatan');
             $table->string('kota');
             $table->string('provinsi');
-            $table->string('kode_pos');
+            $table->string('kode_pos')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->string('no_rekening');
-            $table->string('buku_rekening');
+            $table->string('no_rekening')->nullable();
+            $table->string('buku_rekening')->nullable();    
             $table->integer('point')->default(100); #bonus point pengguna baru
             $table->timestamps();
         });
